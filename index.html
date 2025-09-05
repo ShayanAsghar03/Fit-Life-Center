@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitLife Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': '#ff3366',
+                        'secondary': '#ff6699',
+                        'dark': '#111',
+                        'dark-alt': '#222',
+                        'light': '#eee',
+                        'light-alt': '#ccc',
+                        'accent-dark': 'rgba(255, 51, 102, 0.15)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #111;
+            color: #eee;
+            line-height: 1.6;
+        }
+
+        .shadow-glow {
+            box-shadow: 0 0 10px rgba(255, 51, 102, 0.6);
+        }
+
+        .modal-content {
+            animation: fadeInScale 0.3s ease-out;
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .alert-box {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            color: white;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .alert-box.show {
+            opacity: 1;
+        }
+
+        /* Responsive nav classes */
+        #menu-links.is-open {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: #111; /* Add a background for the overlay */
+            padding: 1rem 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Success/Error Message Box -->
+    <div id="alertBox" class="alert-box"></div>
+
+    <!-- Header & Navigation -->
+    <header class="sticky top-0 bg-dark/85 backdrop-blur-md z-[999] shadow-lg">
+        <nav class="container mx-auto flex justify-between items-center py-4 px-4 sm:px-6 lg:px-8">
+            <div class="logo text-2xl font-bold text-primary tracking-wide">FitLife</div>
+            <!-- Hamburger button for mobile, hidden on desktop -->
+            <button id="menu-btn" class="text-light-alt hover:text-primary md:hidden focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+            <!-- Navigation links - hidden by default, visible on desktop -->
+            <ul id="menu-links" class="list-none p-0 m-0 hidden md:flex md:space-x-6 md:items-center md:justify-end flex-1 md:gap-x-8 text-center">
+                <li><a href="#hero" class="nav-link text-light-alt hover:text-white transition-colors duration-300 block py-2 md:py-0">Home</a></li>
+                <li><a href="#about" class="nav-link text-light-alt hover:text-white transition-colors duration-300 block py-2 md:py-0">About</a></li>
+                <li><a href="#services" class="nav-link text-light-alt hover:text-white transition-colors duration-300 block py-2 md:py-0">Services</a></li>
+                <li><a href="#schedule" class="nav-link text-light-alt hover:text-white transition-colors duration-300 block py-2 md:py-0">Schedule</a></li>
+                <li><a href="#pricing" class="nav-link text-light-alt hover:text-white transition-colors duration-300 block py-2 md:py-0">Pricing</a></li>
+                <li><a href="#trainers" class="nav-link text-light-alt hover:text-white transition-colors duration-300 block py-2 md:py-0">Trainer</a></li>
+                <li><a href="#bmi" class="nav-link text-light-alt hover:text-white transition-colors duration-300 block py-2 md:py-0">BMI</a></li>
+                <li><a href="#contact" class="nav-link text-light-alt hover:text-white transition-colors duration-300 block py-2 md:py-0">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="h-[100vh] bg-[url('https://images.unsplash.com/photo-1554284126-aa88f22d8b74?auto=format&fit=crop&w=1350&q=80')] bg-center bg-cover bg-no-repeat flex flex-col justify-center items-center text-center p-4 relative after:content-[''] after:absolute after:inset-0 after:bg-dark/60 after:z-0">
+        <div class="relative z-10 p-4 rounded-lg">
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-primary tracking-wider uppercase mb-4">Welcome to FitLife Center</h1>
+            <p class="text-lg sm:text-xl max-w-2xl text-white mb-8 font-medium">Your journey to fitness begins here! Achieve your goals with expert trainers & modern facilities.</p>
+            <a href="#contact" class="inline-block py-3 px-8 bg-primary text-white font-bold rounded-full uppercase tracking-wider transition-all duration-300 hover:bg-secondary hover:scale-105">Join Now</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="container mx-auto py-16 px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl sm:text-4xl font-bold text-primary border-b-2 border-primary inline-block pb-1 mb-4">About Us</h2>
+        <p class="max-w-3xl text-lg text-light-alt mb-8">At FitLife Center, we are committed to helping you achieve your fitness goals. We offer professional trainers, modern equipment, and personalized programs tailored to your needs.</p>
+        <ul class="list-disc list-inside space-y-2 max-w-3xl text-light">
+            <li>Experienced certified trainers</li>
+            <li>State-of-the-art equipment</li>
+            <li>Personalized nutrition plans</li>
+            <li>Group classes and private sessions</li>
+            <li>Flexible membership options</li>
+        </ul>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="container mx-auto py-16 px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl sm:text-4xl font-bold text-primary border-b-2 border-primary inline-block pb-1 mb-4">Our Services</h2>
+        <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 max-w-5xl mx-auto list-none p-0 mt-8">
+            <li class="bg-accent-dark rounded-xl p-6 font-semibold shadow-glow text-center transition-all duration-300 hover:bg-primary hover:text-white cursor-pointer">Weight Training</li>
+            <li class="bg-accent-dark rounded-xl p-6 font-semibold shadow-glow text-center transition-all duration-300 hover:bg-primary hover:text-white cursor-pointer">Yoga & Meditation</li>
+            <li class="bg-accent-dark rounded-xl p-6 font-semibold shadow-glow text-center transition-all duration-300 hover:bg-primary hover:text-white cursor-pointer">Cardio Programs</li>
+            <li class="bg-accent-dark rounded-xl p-6 font-semibold shadow-glow text-center transition-all duration-300 hover:bg-primary hover:text-white cursor-pointer">Personal Training</li>
+            <li class="bg-accent-dark rounded-xl p-6 font-semibold shadow-glow text-center transition-all duration-300 hover:bg-primary hover:text-white cursor-pointer">Nutrition Plans</li>
+            <li class="bg-accent-dark rounded-xl p-6 font-semibold shadow-glow text-center transition-all duration-300 hover:bg-primary hover:text-white cursor-pointer">Online Consultations</li>
+            <li class="bg-accent-dark rounded-xl p-6 font-semibold shadow-glow text-center transition-all duration-300 hover:bg-primary hover:text-white cursor-pointer">Health Tracking</li>
+        </ul>
+    </section>
+
+    <!-- Schedule Section -->
+    <section id="schedule" class="container mx-auto py-16 px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl sm:text-4xl font-bold text-primary border-b-2 border-primary inline-block pb-1 mb-4">Class Schedule</h2>
+        <div class="overflow-x-auto rounded-xl shadow-glow">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr>
+                        <th class="py-3 px-4 bg-primary text-white uppercase text-sm font-bold">Day</th>
+                        <th class="py-3 px-4 bg-primary text-white uppercase text-sm font-bold">Class</th>
+                        <th class="py-3 px-4 bg-primary text-white uppercase text-sm font-bold">Time</th>
+                        <th class="py-3 px-4 bg-primary text-white uppercase text-sm font-bold">Trainer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="border-b border-gray-700 transition-colors duration-300 hover:bg-accent-dark">
+                        <td class="py-3 px-4">Monday</td>
+                        <td class="py-3 px-4">Morning Yoga</td>
+                        <td class="py-3 px-4">7:00 AM - 8:00 AM</td>
+                        <td class="py-3 px-4">Jazil</td>
+                    </tr>
+                    <tr class="border-b border-gray-700 transition-colors duration-300 hover:bg-accent-dark">
+                        <td class="py-3 px-4">Monday</td>
+                        <td class="py-3 px-4">Strength Training</td>
+                        <td class="py-3 px-4">6:00 PM - 7:00 PM</td>
+                        <td class="py-3 px-4">Shayan</td>
+                    </tr>
+                    <tr class="border-b border-gray-700 transition-colors duration-300 hover:bg-accent-dark">
+                        <td class="py-3 px-4">Tuesday</td>
+                        <td class="py-3 px-4">HIIT Cardio</td>
+                        <td class="py-3 px-4">7:30 AM - 8:30 AM</td>
+                        <td class="py-3 px-4">Sahil</td>
+                    </tr>
+                    <tr class="border-b border-gray-700 transition-colors duration-300 hover:bg-accent-dark">
+                        <td class="py-3 px-4">Wednesday</td>
+                        <td class="py-3 px-4">Spin Class</td>
+                        <td class="py-3 px-4">5:00 PM - 6:00 PM</td>
+                        <td class="py-3 px-4">Shayan</td>
+                    </tr>
+                    <tr class="transition-colors duration-300 hover:bg-accent-dark">
+                        <td class="py-3 px-4">Friday</td>
+                        <td class="py-3 px-4">Pilates</td>
+                        <td class="py-3 px-4">10:00 AM - 11:00 AM</td>
+                        <td class="py-3 px-4">Jazil</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="container mx-auto py-16 px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl sm:text-4xl font-bold text-primary border-b-2 border-primary inline-block pb-1 mb-4">Membership Plans</h2>
+        <div class="flex flex-wrap gap-6 justify-center mt-8">
+            <div class="bg-accent-dark rounded-2xl p-8 flex-1 flex flex-col text-center shadow-glow transition-colors duration-300 hover:bg-primary hover:text-white min-w-[250px] max-w-sm">
+                <h3 class="text-2xl font-bold mb-4">Basic Access</h3>
+                <p class="text-xl font-semibold mb-2">Rs.2000.00/month</p>
+                <p class="text-sm text-light-alt mb-4">Access to gym facilities and basic equipment.</p>
+                <ul class="list-none p-0 text-left text-sm flex-grow space-y-2">
+                    <li class="border-b border-gray-600/20 pb-1">Full Gym Access</li>
+                    <li class="border-b border-gray-600/20 pb-1">Locker Room</li>
+                    <li>1 Free Session</li>
+                </ul>
+                <button class="select-button mt-auto py-2 px-6 bg-primary text-white font-bold rounded-full transition-colors duration-300 hover:bg-secondary" onclick="openMembershipModal('Basic Access', 2000.00)">Select Plan</button>
+            </div>
+            <div class="bg-accent-dark rounded-2xl p-8 flex-1 flex flex-col text-center shadow-glow transition-colors duration-300 hover:bg-primary hover:text-white min-w-[250px] max-w-sm">
+                <h3 class="text-2xl font-bold mb-4">Premium Pass</h3>
+                <p class="text-xl font-semibold mb-2">Rs.5000.00/3 months</p>
+                <p class="text-sm text-light-alt mb-4">Includes access to all classes and amenities.</p>
+                <ul class="list-none p-0 text-left text-sm flex-grow space-y-2">
+                    <li class="border-b border-gray-600/20 pb-1">Full Gym Access</li>
+                    <li class="border-b border-gray-600/20 pb-1">Unlimited Classes</li>
+                    <li class="border-b border-gray-600/20 pb-1">Personal Trainer</li>
+                    <li>Sauna & Spa</li>
+                </ul>
+                <button class="select-button mt-auto py-2 px-6 bg-primary text-white font-bold rounded-full transition-colors duration-300 hover:bg-secondary" onclick="openMembershipModal('Premium Pass', 5000.00)">Select Plan</button>
+            </div>
+            <div class="bg-accent-dark rounded-2xl p-8 flex-1 flex flex-col text-center shadow-glow transition-colors duration-300 hover:bg-primary hover:text-white min-w-[250px] max-w-sm">
+                <h3 class="text-2xl font-bold mb-4">Annual Platinum</h3>
+                <p class="text-xl font-semibold mb-2">Rs.20000.00/year</p>
+                <p class="text-sm text-light-alt mb-4">Everything included, with a huge discount!</p>
+                <ul class="list-none p-0 text-left text-sm flex-grow space-y-2">
+                    <li class="border-b border-gray-600/20 pb-1">All Premium Features</li>
+                    <li class="border-b border-gray-600/20 pb-1">Free T-shirt</li>
+                    <li class="border-b border-gray-600/20 pb-1">Quarterly Health Check</li>
+                    <li>Discount on Merch</li>
+                </ul>
+                <button class="select-button mt-auto py-2 px-6 bg-primary text-white font-bold rounded-full transition-colors duration-300 hover:bg-secondary" onclick="openMembershipModal('Annual Platinum', 20000.00)">Select Plan</button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Trainer Section -->
+    <section id="trainers" class="container mx-auto py-16 px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl sm:text-4xl font-bold text-primary border-b-2 border-primary inline-block pb-1 mb-4">Meet Our Trainers</h2>
+        <div class="flex flex-wrap justify-center gap-6 mt-8">
+            <div class="trainer-card bg-dark-alt rounded-2xl p-6 text-center shadow-lg transition-transform duration-300 hover:scale-105 min-w-[250px] max-w-xs">
+                <h5 class="text-xl font-bold text-primary mb-2">Shayan</h5>
+                <p class="text-light-alt font-medium">Strength Training</p>
+                <p class="text-sm mt-2 text-light-alt">Certified personal trainer with 10 years of experience, specializing in strength and conditioning.</p>
+            </div>
+            <div class="trainer-card bg-dark-alt rounded-2xl p-6 text-center shadow-lg transition-transform duration-300 hover:scale-105 min-w-[250px] max-w-xs">
+                <h5 class="text-xl font-bold text-primary mb-2">Jazil</h5>
+                <p class="text-light-alt font-medium">Yoga & Flexibility</p>
+                <p class="text-sm mt-2 text-light-alt">Experienced yoga instructor specializing in Vinyasa flow, meditation, and flexibility training.</p>
+            </div>
+            <div class="trainer-card bg-dark-alt rounded-2xl p-6 text-center shadow-lg transition-transform duration-300 hover:scale-105 min-w-[250px] max-w-xs">
+                <h5 class="text-xl font-bold text-primary mb-2">Sahil</h5>
+                <p class="text-light-alt font-medium">HIIT & Cardio</p>
+                <p class="text-sm mt-2 text-light-alt">High-energy trainer focused on high-intensity interval training and endurance programs.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- BMI Calculator -->
+    <section id="bmi" class="container mx-auto py-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md mx-auto bg-accent-dark rounded-xl p-6 sm:p-8 shadow-lg">
+            <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-4 text-center">BMI Calculator</h2>
+            <div class="mb-4">
+                <label for="weight" class="block font-semibold mb-2">Weight (kg)</label>
+                <input type="number" id="weight" min="1" placeholder="e.g. 70" class="w-full px-4 py-2 rounded-lg border-none focus:ring-2 focus:ring-primary outline-none bg-white/10 text-white" />
+            </div>
+            <div class="mb-4">
+                <label for="height" class="block font-semibold mb-2">Height (cm)</label>
+                <input type="number" id="height" min="1" placeholder="e.g. 170" class="w-full px-4 py-2 rounded-lg border-none focus:ring-2 focus:ring-primary outline-none bg-white/10 text-white" />
+            </div>
+            <button onclick="calculateBMI()" class="w-full py-3 px-6 bg-primary text-white font-bold rounded-lg transition-colors duration-300 hover:bg-secondary">Calculate BMI</button>
+            <p id="bmi-result" class="mt-4 font-bold text-center"></p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="container mx-auto py-16 px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl sm:text-4xl font-bold text-primary border-b-2 border-primary inline-block pb-1 mb-4">Contact Us</h2>
+        <form onsubmit="submitContactForm(event)" class="max-w-md mx-auto flex flex-col gap-4 mt-8">
+            <label for="contact-name" class="font-semibold">Name</label>
+            <input type="text" id="contact-name" name="name" required placeholder="Your name" class="w-full px-4 py-2 rounded-lg border-none focus:ring-2 focus:ring-primary outline-none bg-white/10 text-white" />
+    
+            <label for="contact-email" class="font-semibold">Email</label>
+            <input type="email" id="contact-email" name="email" required placeholder="you@example.com" class="w-full px-4 py-2 rounded-lg border-none focus:ring-2 focus:ring-primary outline-none bg-white/10 text-white" />
+    
+            <label for="contact-message" class="font-semibold">Message</label>
+            <textarea id="contact-message" name="message" required placeholder="Your message" class="w-full px-4 py-2 rounded-lg border-none min-h-[120px] focus:ring-2 focus:ring-primary outline-none bg-white/10 text-white"></textarea>
+    
+            <button type="submit" class="w-full py-3 px-6 bg-primary text-white font-bold rounded-lg transition-colors duration-300 hover:bg-secondary">Send</button>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark-alt text-light-alt text-center py-6 mt-12 text-sm">
+        &copy; 2025 FitLife Center. All rights reserved.
+        <p class="mt-2">123 Fitness Street, Malir, Karachi, Sindh 75500, Pakistan</p>
+        <p>Phone: +92 21 34567890 | Email: info@fitlife.com</p>
+    </footer>
+
+    <!-- Membership Modal -->
+    <div id="membershipModal" class="modal fixed inset-0 z-[1000] bg-dark/70 p-10 flex items-center justify-center hidden">
+        <div class="modal-content bg-gray-800 rounded-xl p-8 max-w-xl w-full shadow-lg text-light-alt">
+            <span class="close-button float-right text-3xl font-bold text-light-alt hover:text-primary cursor-pointer leading-none" onclick="closeMembershipModal()">&times;</span>
+            <h2 class="text-2xl font-bold text-primary mb-4 text-center">Join <span id="plan-name"></span> Plan</h2>
+            <form id="membershipForm" onsubmit="submitMembership(event)" class="flex flex-col gap-4">
+                <label for="name" class="font-semibold">Full Name:</label>
+                <input type="text" id="name" placeholder="Full Name" required class="w-full p-3 rounded-lg border-none bg-gray-700 text-light focus:outline-none focus:ring-2 focus:ring-primary" />
+                
+                <label for="email" class="font-semibold">Email Address:</label>
+                <input type="email" id="email" placeholder="Email Address" required class="w-full p-3 rounded-lg border-none bg-gray-700 text-light focus:outline-none focus:ring-2 focus:ring-primary" />
+                
+                <label for="card" class="font-semibold">Card Number:</label>
+                <input type="text" id="card" placeholder="Card Number" required class="w-full p-3 rounded-lg border-none bg-gray-700 text-light focus:outline-none focus:ring-2 focus:ring-primary" />
+                
+                <label for="expiry" class="font-semibold">Expiry Date (MM/YY):</label>
+                <input type="text" id="expiry" placeholder="MM/YY" required class="w-full p-3 rounded-lg border-none bg-gray-700 text-light focus:outline-none focus:ring-2 focus:ring-primary" />
+                
+                <label for="cvv" class="font-semibold">CVV:</label>
+                <input type="text" id="cvv" placeholder="CVV" required class="w-full p-3 rounded-lg border-none bg-gray-700 text-light focus:outline-none focus:ring-2 focus:ring-primary" />
+
+                <input type="hidden" id="plan">
+                <input type="hidden" id="price">
+                <div class="flex justify-end gap-2 mt-4">
+                    <button type="submit" class="py-2 px-6 bg-primary text-white font-bold rounded-lg transition-colors duration-300 hover:bg-secondary">Confirm</button>
+                    <button type="button" onclick="closeMembershipModal()" class="py-2 px-6 bg-gray-600 text-white font-bold rounded-lg transition-colors duration-300 hover:bg-gray-700">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <script>
+        // --- Common UI Functions ---
+        function showAlert(message, type) {
+            const alertBox = document.getElementById('alertBox');
+            alertBox.textContent = message;
+            alertBox.classList.add('show');
+            if (type === 'success') {
+                alertBox.style.backgroundColor = '#4CAF50';
+            } else if (type === 'error') {
+                alertBox.style.backgroundColor = '#f44336';
+            }
+            setTimeout(() => {
+                alertBox.classList.remove('show');
+            }, 3000);
+        }
+
+        // --- Hamburger menu logic (updated for better responsiveness) ---
+        const menuBtn = document.getElementById('menu-btn');
+        const menuLinks = document.getElementById('menu-links');
+
+        menuBtn.addEventListener('click', () => {
+            menuLinks.classList.toggle('hidden');
+            menuLinks.classList.toggle('is-open');
+        });
+        
+        // Function to close mobile menu when a link is clicked
+        function closeMobileMenu() {
+            if (menuLinks.classList.contains('is-open')) {
+                menuLinks.classList.remove('is-open');
+                menuLinks.classList.add('hidden');
+            }
+        }
+        
+        // Add event listeners to all nav links to close the menu on click
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
+        });
+
+        // --- Smooth scrolling and active link highlighting ---
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId && targetId !== '#') {
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+        
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (pageYOffset >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('text-primary');
+                link.classList.add('text-light-alt');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.remove('text-light-alt');
+                    link.classList.add('text-primary');
+                }
+            });
+        });
+
+        // --- BMI Calculator Function (existing) ---
+        function calculateBMI() {
+            const weight = parseFloat(document.getElementById('weight').value);
+            const heightCm = parseFloat(document.getElementById('height').value);
+            const bmiResultElement = document.getElementById('bmi-result');
+
+            if (isNaN(weight) || isNaN(heightCm) || weight <= 0 || heightCm <= 0) {
+                bmiResultElement.textContent = 'Please enter valid weight and height.';
+                bmiResultElement.style.color = '#ff6699';
+                return;
+            }
+
+            const heightM = heightCm / 100;
+            const bmi = (weight / (heightM * heightM)).toFixed(1);
+            let category = '';
+            let color = '#eee';
+
+            if (bmi < 18.5) {
+                category = 'Underweight';
+                color = '#ff6699';
+            } else if (bmi < 25) {
+                category = 'Normal weight';
+                color = '#4CAF50';
+            } else if (bmi < 30) {
+                category = 'Overweight';
+                color = '#ff6699';
+            } else {
+                category = 'Obese';
+                color = '#ff6699';
+            }
+            bmiResultElement.textContent = `Your BMI is ${bmi} (${category}).`;
+            bmiResultElement.style.color = color;
+        }
+
+        // --- Membership Registration (Modal logic updated) ---
+        function openMembershipModal(plan, price) {
+            document.getElementById('membershipModal').classList.remove('hidden');
+            document.getElementById('plan-name').innerText = plan;
+            document.getElementById('plan').value = plan;
+            document.getElementById('price').value = price;
+        }
+
+        function closeMembershipModal() {
+            document.getElementById('membershipModal').classList.add('hidden');
+            document.getElementById('membershipForm').reset();
+        }
+
+        async function submitMembership(e) {
+            e.preventDefault();
+            const data = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                card: document.getElementById('card').value,
+                expiry: document.getElementById('expiry').value,
+                cvv: document.getElementById('cvv').value,
+                plan: document.getElementById('plan').value,
+                price: parseFloat(document.getElementById('price').value)
+            };
+            
+            showAlert('Membership confirmed successfully!', 'success');
+            closeMembershipModal();
+        }
+
+        // --- Contact Form (updated) ---
+        async function submitContactForm(e) {
+            e.preventDefault();
+            const data = {
+                name: document.getElementById('contact-name').value,
+                email: document.getElementById('contact-email').value,
+                message: document.getElementById('contact-message').value
+            };
+            
+            showAlert('Message sent successfully! We will get back to you shortly.', 'success');
+            document.getElementById('contact-name').value = '';
+            document.getElementById('contact-email').value = '';
+            document.getElementById('contact-message').value = '';
+        }
+    </script>
+</body>
+</html>
